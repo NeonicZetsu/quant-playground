@@ -1,0 +1,64 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ----------------------------
+# Parameters
+# ----------------------------
+steps = 1000
+num_walks = 1000
+origin = 0
+step_set = np.array([-1, 1])
+
+# ----------------------------
+# Simulation Function
+# ----------------------------
+def simulate_random_walks(steps, num_walks):
+    walks = []
+    for _ in range(num_walks):
+        random_steps = np.random.choice(step_set, size=steps)
+        path = np.concatenate([[origin], np.cumsum(random_steps)])
+        walks.append(path)
+    return np.array(walks)
+
+# ----------------------------
+# Run Simulation
+# ----------------------------
+all_walks = simulate_random_walks(steps, num_walks)
+
+# ----------------------------
+# Statistics
+# ----------------------------
+mean_path = np.mean(all_walks, axis=0)
+std_dev = np.std(all_walks, axis=0)
+time_steps = np.arange(len(mean_path))
+sqrt_t = np.sqrt(time_steps)
+
+# ----------------------------
+# Plot 1: Random Walks
+# ----------------------------
+plt.figure(figsize=(10, 4))
+
+for path in all_walks[:100]:  # plot subset for clarity
+    plt.plot(path, alpha=0.2)
+
+plt.plot(mean_path, linewidth=2, label='Mean')
+plt.plot(sqrt_t, linestyle='--', label='sqrt(t)')
+plt.plot(-sqrt_t, linestyle='--')
+plt.plot(std_dev, label='Simulated std dev')
+plt.plot(-std_dev)
+
+plt.title("1D Random Walks")
+plt.xlabel("Steps")
+plt.ylabel("Position")
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
+# ----------------------------
+# Plot 2: Histogram of Final Positions
+# ----------------------------
+final_positions = all_walks[:, -1]
+
+plt.figure(figsize=(8, 4))
+plt.hist(final_positions, bins=50, density=True)
+plt.show()
