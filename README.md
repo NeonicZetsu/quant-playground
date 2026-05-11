@@ -44,7 +44,7 @@ Final positions follow a normal distribution
 
 Random walks underpin:
 
-Brownian Motion
-Geometric Brownian Motion
+Brownian Motion,
+Geometric Brownian Motion,
 Black–Scholes model
 
