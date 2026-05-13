@@ -1,4 +1,4 @@
-# quant-playground
+# 1d-Random-Walk
 
 ## Overview
 
